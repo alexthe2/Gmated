@@ -12,8 +12,8 @@ import java.awt.*;
 @Setter
 @Getter
 public class GridButton extends JButton {
-    protected int x;
-    protected int y;
+    protected int gridx;
+    protected int gridy;
 
     /**
      * Create a GridButton
@@ -24,8 +24,8 @@ public class GridButton extends JButton {
     public GridButton(String text, int x, int y) {
         super(text);
 
-        this.x = x;
-        this.y = y;
+        this.gridx = x;
+        this.gridy = y;
         init();
     }
 
@@ -38,8 +38,8 @@ public class GridButton extends JButton {
     public GridButton(ImageIcon icon, int x, int y) {
         super(icon);
 
-        this.x = x;
-        this.y = y;
+        this.gridx = x;
+        this.gridy = y;
         init();
     }
 

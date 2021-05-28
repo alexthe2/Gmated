@@ -28,8 +28,8 @@ public class Knight extends Pawn {
         image = ImageIO.read(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource(String.format("knight%d.png", color))));
         moves = new KnightMoves();
 
-        this.x = x;
-        this.y = y;
+        this.gridx = x;
+        this.gridy = y;
         support = new PropertyChangeSupport(this);
 
         register();
@@ -55,13 +55,13 @@ public class Knight extends Pawn {
 
     private void positions() {
         for(int i = -2; i < 3; i++) {
-            support.firePropertyChange("MOVABLE", null, new ChessPoint(x + i, y));
-            support.firePropertyChange("MOVABLE", null, new ChessPoint(x, y+i));
+            support.firePropertyChange("MOVABLE", null, new ChessPoint(gridx + i, gridy));
+            support.firePropertyChange("MOVABLE", null, new ChessPoint(gridx, gridy +i));
         }
-        support.firePropertyChange("MOVABLE", null, new ChessPoint(x-1, y-1));
-        support.firePropertyChange("MOVABLE", null, new ChessPoint(x-1, y+1));
-        support.firePropertyChange("MOVABLE", null, new ChessPoint(x+1, y-1));
-        support.firePropertyChange("MOVABLE", null, new ChessPoint(x+1, y+1));
+        support.firePropertyChange("MOVABLE", null, new ChessPoint(gridx -1, gridy -1));
+        support.firePropertyChange("MOVABLE", null, new ChessPoint(gridx -1, gridy +1));
+        support.firePropertyChange("MOVABLE", null, new ChessPoint(gridx +1, gridy -1));
+        support.firePropertyChange("MOVABLE", null, new ChessPoint(gridx +1, gridy +1));
     }
 
     public void register(PropertyChangeListener listener) {
