@@ -1,0 +1,10 @@
+purple:
+  king:
+    - x: 3
+      y: 3
+  knight:
+    - x: 5
+      y: 2
+
+orange:
+  king: []
