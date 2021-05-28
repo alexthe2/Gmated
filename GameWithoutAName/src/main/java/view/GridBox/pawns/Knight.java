@@ -1,34 +1,41 @@
 package view.GridBox.pawns;
 
-import Swings.IHotRescale;
 import config.ChessPoint;
 import lombok.Getter;
 import lombok.SneakyThrows;
-import view.GridBox.GridButton;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.Objects;
 
+/**
+ * A Knight in the field
+ */
 public class Knight extends Pawn {
-    private BufferedImage image;
     @Getter
     private PropertyChangeSupport support;
 
-    private int x, y;
+    private KnightMoves moves;
 
     @SneakyThrows
     public Knight(int color, int x, int y) {
-        super("");
+        super("",  x, y);
         image = ImageIO.read(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource(String.format("knight%d.png", color))));
-        KnightMoves moves = new KnightMoves();
+        moves = new KnightMoves();
+
+        this.x = x;
+        this.y = y;
+        support = new PropertyChangeSupport(this);
+
+        register();
+    }
+
+    private void register() {
         moves.register(e -> {
             if(e.getPropertyName().equals("CLICKED")) {
                 if ((boolean) e.getNewValue()) {
@@ -39,10 +46,6 @@ public class Knight extends Pawn {
             }
         });
         addActionListener(moves);
-
-        this.x = x;
-        this.y = y;
-        support = new PropertyChangeSupport(this);
     }
 
     private void clearing() {
@@ -65,11 +68,8 @@ public class Knight extends Pawn {
         support.addPropertyChangeListener(listener);
     }
 
-    public void swap(int x1, int y1, int x2, int y2) {
 
-    }
-
-    private class KnightMoves implements ActionListener {
+    private static class KnightMoves implements ActionListener {
         private boolean clicked = false;
         private PropertyChangeSupport support;
 

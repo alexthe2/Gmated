@@ -39,7 +39,7 @@ public class MainPanel extends JPanel {
 
         for(var y = 0; y < SIZE_Y; y++) {
             for(var x = 0; x < SIZE_X; x++) {
-                var button = new GridButton(String.format("x-%d : y-%d", x, y));
+                var button = new GridButton(String.format("x-%d : y-%d", x, y), x, y);
                 add(button);
                 buttons.put(new ChessPoint(x,y), button);
                 button.makeUnClickable();
@@ -83,7 +83,7 @@ public class MainPanel extends JPanel {
             final int x = (Integer) king.get("x");
             final int y = (Integer) king.get("y");
 
-            replace(new King(1), x, y);
+            replace(new King(1, x, y), x, y);
         }
 
         for(var knight : (ArrayList<Map<String, Object>>) (purples).get("knight")) {
