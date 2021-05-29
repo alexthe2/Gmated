@@ -20,7 +20,7 @@ public class King extends Pawn {
      */
     @SneakyThrows
     public King(int color, int x, int y) {
-        super("", x, y);
+        super("", x, y, color);
         image = ImageIO.read(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource(String.format("king%d.png", color))));
     }
 

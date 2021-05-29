@@ -4,6 +4,7 @@ import Swings.AdvancedGridLayout;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import config.ChessPoint;
+import controller.Controller;
 import lombok.SneakyThrows;
 import view.GridBox.GridButton;
 import view.GridBox.pawns.King;
@@ -57,6 +58,7 @@ public class MainPanel extends JPanel {
     private void checkSwap(int x, int y) {
         if (oldPoint != null) {
             swap(new ChessPoint(x, y), oldPoint);
+            Controller.move();
         }
     }
 
@@ -106,7 +108,22 @@ public class MainPanel extends JPanel {
         buttons.forEach((chessPoint, gridButton) -> {
             if(!(gridButton instanceof Pawn))
                 gridButton.makeUnClickable();
+            else
+                ((Pawn)gridButton).setClicked(false);
         });
+    }
+
+    private void registerKnight(Knight k, int x, int y) {
+
+        k.register(e -> {
+            switch (e.getPropertyName()) {
+                case "CLEAR" -> clearClickable();
+                case "MOVABLE" -> makeClickable((ChessPoint) e.getNewValue());
+                case "CURRENT" -> oldPoint = new ChessPoint(((ChessPoint) e.getNewValue()).getX(), ((ChessPoint) e.getNewValue()).getY());
+                default -> throw new IllegalStateException();
+            }
+        });
+        replace(k, x, y);
     }
 
     @SneakyThrows
@@ -115,27 +132,27 @@ public class MainPanel extends JPanel {
         config = mapper.readValue(new File(yaml), Map.class);
 
         Map<String, Object> purples = (Map<String, Object>) config.get("purple");
+        Map<String, Object> oranges = (Map<String, Object>) config.get("orange");
+
         for(var king : (ArrayList<Map<String, Object>>) (purples).get("king")) {
             final int x = (Integer) king.get("x");
             final int y = (Integer) king.get("y");
 
-            replace(new King(1, x, y), x, y);
+            replace(new King(0, x, y), x, y);
         }
 
         for(var knight : (ArrayList<Map<String, Object>>) (purples).get("knight")) {
             final int x = (Integer) knight.get("x");
             final int y = (Integer) knight.get("y");
 
-            var k = new Knight(1, x, y);
-            k.register(e -> {
-                switch (e.getPropertyName()) {
-                    case "CLEAR" -> clearClickable();
-                    case "MOVABLE" -> makeClickable((ChessPoint) e.getNewValue());
-                    case "CURRENT" -> oldPoint = new ChessPoint(((ChessPoint) e.getNewValue()).getX(), ((ChessPoint) e.getNewValue()).getY());
-                    default -> throw new IllegalStateException();
-                }
-            });
-            replace(k, x, y);
+            registerKnight(new Knight(0, x, y), x, y);
+        }
+
+        for(var knight : (ArrayList<Map<String, Object>>) (oranges).get("knight")) {
+            final int x = (Integer) knight.get("x");
+            final int y = (Integer) knight.get("y");
+
+            registerKnight(new Knight(1, x, y), x, y);
         }
     }
 }

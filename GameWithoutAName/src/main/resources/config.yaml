@@ -8,3 +8,7 @@ purple:
 
 orange:
   king: []
+
+  knight:
+    - x: 7
+      y: 3

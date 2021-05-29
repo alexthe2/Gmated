@@ -2,6 +2,7 @@ package view.GridBox.pawns;
 
 import config.ChessPoint;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.SneakyThrows;
 
 import javax.imageio.ImageIO;
@@ -17,16 +18,11 @@ import java.util.Objects;
  * A Knight in the field
  */
 public class Knight extends Pawn {
-    @Getter
-    private PropertyChangeSupport support;
-
-    private KnightMoves moves;
 
     @SneakyThrows
     public Knight(int color, int x, int y) {
-        super("",  x, y);
+        super("",  x, y, color);
         image = ImageIO.read(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource(String.format("knight%d.png", color))));
-        moves = new KnightMoves();
 
         this.gridx = x;
         this.gridy = y;
@@ -36,20 +32,17 @@ public class Knight extends Pawn {
     }
 
     private void register() {
-        moves.register(e -> {
-            if(e.getPropertyName().equals("CLICKED")) {
-                if ((boolean) e.getNewValue()) {
-                    positions();
-                } else {
-                    clearing();
-                }
+        addActionListener(e -> {
+            if(!canMove())
+                return;
+
+            clicked = !clicked;
+            if (!clicked) {
+                super.informClear();
+            } else {
+                positions();
             }
         });
-        addActionListener(moves);
-    }
-
-    private void clearing() {
-        support.firePropertyChange("CLEAR", false, true);
     }
 
 
@@ -57,38 +50,17 @@ public class Knight extends Pawn {
         support.firePropertyChange("CURRENT", null, new ChessPoint(gridx, gridy));
 
         for(int i = -2; i < 3; i++) {
-            support.firePropertyChange("MOVABLE", null, new ChessPoint(gridx + i, gridy));
-            support.firePropertyChange("MOVABLE", null, new ChessPoint(gridx, gridy +i));
+            if(i == 0) continue;
+            informFieldMovable(gridx + i, gridy);
+            informFieldMovable(gridx, gridy + i);
         }
-        support.firePropertyChange("MOVABLE", null, new ChessPoint(gridx -1, gridy -1));
-        support.firePropertyChange("MOVABLE", null, new ChessPoint(gridx -1, gridy +1));
-        support.firePropertyChange("MOVABLE", null, new ChessPoint(gridx +1, gridy -1));
-        support.firePropertyChange("MOVABLE", null, new ChessPoint(gridx +1, gridy +1));
+
+        informFieldMovable(gridx - 1, gridy - 1);
+        informFieldMovable(gridx - 1, gridy + 1);
+        informFieldMovable(gridx + 1, gridy - 1);
+        informFieldMovable(gridx + 1, gridy + 1);
     }
 
-    public void register(PropertyChangeListener listener) {
-        support.addPropertyChangeListener(listener);
-    }
-
-
-    private static class KnightMoves implements ActionListener {
-        private boolean clicked = false;
-        private PropertyChangeSupport support;
-
-        public KnightMoves()  {
-            support = new PropertyChangeSupport(this);
-        }
-
-        public void register(PropertyChangeListener listener) {
-            support.addPropertyChangeListener(listener);
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            support.firePropertyChange("CLICKED", clicked, !clicked);
-            clicked = !clicked;
-        }
-    }
 
     @Override
     public void onRescale(int width, int height) {
