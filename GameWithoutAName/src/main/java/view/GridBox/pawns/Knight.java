@@ -54,6 +54,8 @@ public class Knight extends Pawn {
 
 
     private void positions() {
+        support.firePropertyChange("CURRENT", null, new ChessPoint(gridx, gridy));
+
         for(int i = -2; i < 3; i++) {
             support.firePropertyChange("MOVABLE", null, new ChessPoint(gridx + i, gridy));
             support.firePropertyChange("MOVABLE", null, new ChessPoint(gridx, gridy +i));

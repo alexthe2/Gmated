@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="26f5d673-0b5e-4a66-9ea0-4178a2f475b5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GameWithoutAName/src/main/java/controller/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameWithoutAName/src/main/java/view/GridBox/pawns/Knight.java" beforeDir="false" afterPath="$PROJECT_DIR$/GameWithoutAName/src/main/java/view/GridBox/pawns/Knight.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameWithoutAName/src/main/java/view/MainPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/GameWithoutAName/src/main/java/view/MainPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/GameWithoutAName/src/main/resources/config.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +46,8 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Gmated\GameWithoutAName\src\main\resources" />
+      <recent name="E:\Gmated\GameWithoutAName" />
       <recent name="E:\Gmated" />
     </key>
   </component>
@@ -55,17 +61,6 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -84,7 +79,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1622218495182</updated>
-      <workItem from="1622218497046" duration="12430000" />
+      <workItem from="1622218497046" duration="13799000" />
+      <workItem from="1622286170909" duration="2580000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1622220643253</created>
@@ -121,7 +117,14 @@
       <option name="project" value="LOCAL" />
       <updated>1622234008035</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="How  about pushing config file">
+      <created>1622234167667</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1622234167667</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -143,8 +146,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/GameWithoutAName/src/main/java/view/MainPanel.java</url>
-          <line>80</line>
-          <option name="timeStamp" value="3" />
+          <line>63</line>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
