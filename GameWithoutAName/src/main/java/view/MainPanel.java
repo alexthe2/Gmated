@@ -4,6 +4,7 @@ import Swings.AdvancedGridLayout;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import config.ChessPoint;
+import config.Dictionary;
 import controller.Controller;
 import lombok.SneakyThrows;
 import view.GridBox.GridButton;
@@ -42,22 +43,27 @@ public class MainPanel extends JPanel {
 
         for(var y = 0; y < SIZE_Y; y++) {
             for(var x = 0; x < SIZE_X; x++) {
-                var button = new GridButton(String.format("x-%d : y-%d", x, y), x, y);
-                add(button, y * SIZE_X + x);
-                buttons.put(new ChessPoint(x,y), button);
-                button.addActionListener(e -> {
-                    checkSwap(button.getGridx(), button.getGridy());
-                });
-                button.makeUnClickable();
+                createAtPos(x, y);
             }
         }
 
         updateFromYaml("E:\\Gmated\\GameWithoutAName\\src\\main\\resources\\config.yaml");
     }
 
+    private GridButton createAtPos(int x, int y) {
+        var button = new GridButton(String.format("x-%d : y-%d", x, y), x, y);
+        add(button, y * SIZE_X + x);
+        buttons.put(new ChessPoint(x,y), button);
+        button.addActionListener(e -> {
+            checkSwap(button.getGridx(), button.getGridy());
+        });
+        button.makeUnClickable();
+
+        return button;
+    }
     private void checkSwap(int x, int y) {
         if (oldPoint != null) {
-            swap(new ChessPoint(x, y), oldPoint);
+            swapAndClear(new ChessPoint(x, y), oldPoint);
             Controller.move();
         }
     }
@@ -80,10 +86,18 @@ public class MainPanel extends JPanel {
         add(button1, p2.getY() * SIZE_X + p2.getX());
         add(button2, p1.getY() * SIZE_X + p1.getX());
 
+    }
+
+    private void clear() {
         clearClickable();
 
         updateUI();
         repaint();
+    }
+
+    private void swapAndClear(ChessPoint p1, ChessPoint p2) {
+        swap(p1, p2);
+        clear();
     }
 
     private void replace(GridButton newButton, int x, int y) {
@@ -113,13 +127,29 @@ public class MainPanel extends JPanel {
         });
     }
 
+    public void checkHit(ChessPoint toHit) {
+        if(oldPoint != null) {
+            if(((Pawn) buttons.get(oldPoint)).getPlayer() != ((Pawn) buttons.get(toHit)).getPlayer()) {
+                 swap(oldPoint, toHit);
+
+                 var toRemove = buttons.get(oldPoint);
+                 buttons.remove(oldPoint);
+                 remove(toRemove);
+                 createAtPos(oldPoint.getX(), oldPoint.getY());
+
+                 clear();
+            }
+        }
+    }
+
     private void registerKnight(Knight k, int x, int y) {
 
         k.register(e -> {
             switch (e.getPropertyName()) {
-                case "CLEAR" -> clearClickable();
-                case "MOVABLE" -> makeClickable((ChessPoint) e.getNewValue());
+                case Dictionary.FIELD_CLEAR -> clearClickable();
+                case Dictionary.FIELD_MOVABLE -> makeClickable((ChessPoint) e.getNewValue());
                 case "CURRENT" -> oldPoint = new ChessPoint(((ChessPoint) e.getNewValue()).getX(), ((ChessPoint) e.getNewValue()).getY());
+                case Dictionary.FIELD_ATTACKED ->  checkHit((ChessPoint) e.getNewValue());
                 default -> throw new IllegalStateException();
             }
         });

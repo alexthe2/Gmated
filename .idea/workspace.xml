@@ -7,15 +7,10 @@
     <list default="true" id="26f5d673-0b5e-4a66-9ea0-4178a2f475b5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GameWithoutAName/src/main/java/config/Dictionary.java" beforeDir="false" afterPath="$PROJECT_DIR$/GameWithoutAName/src/main/java/config/Dictionary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameWithoutAName/src/main/java/controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/GameWithoutAName/src/main/java/controller/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameWithoutAName/src/main/java/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/GameWithoutAName/src/main/java/main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameWithoutAName/src/main/java/view/GridBox/pawns/King.java" beforeDir="false" afterPath="$PROJECT_DIR$/GameWithoutAName/src/main/java/view/GridBox/pawns/King.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GameWithoutAName/src/main/java/view/GridBox/pawns/Knight.java" beforeDir="false" afterPath="$PROJECT_DIR$/GameWithoutAName/src/main/java/view/GridBox/pawns/Knight.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GameWithoutAName/src/main/java/view/GridBox/pawns/Pawn.java" beforeDir="false" afterPath="$PROJECT_DIR$/GameWithoutAName/src/main/java/view/GridBox/pawns/Pawn.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GameWithoutAName/src/main/java/view/MainPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/GameWithoutAName/src/main/java/view/MainPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GameWithoutAName/src/main/resources/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/GameWithoutAName/src/main/resources/config.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameWithoutAName/src/main/resources/king1.png" beforeDir="false" afterPath="$PROJECT_DIR$/GameWithoutAName/src/main/resources/king0.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameWithoutAName/src/main/resources/knight1.png" beforeDir="false" afterPath="$PROJECT_DIR$/GameWithoutAName/src/main/resources/knight0.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +94,7 @@
       <option name="presentableId" value="Default" />
       <updated>1622218495182</updated>
       <workItem from="1622218497046" duration="13799000" />
-      <workItem from="1622286170909" duration="7736000" />
+      <workItem from="1622286170909" duration="9369000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1622220643253</created>
@@ -150,7 +145,14 @@
       <option name="project" value="LOCAL" />
       <updated>1622290083344</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Added multiplayer movement">
+      <created>1622295901173</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1622295901173</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -162,7 +164,8 @@
     <MESSAGE value="Fix commit" />
     <MESSAGE value="How  about pushing config file" />
     <MESSAGE value="How  about pushing movement" />
-    <option name="LAST_COMMIT_MESSAGE" value="How  about pushing movement" />
+    <MESSAGE value="Added multiplayer movement" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added multiplayer movement" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -173,13 +176,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/GameWithoutAName/src/main/java/view/MainPanel.java</url>
-          <line>65</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/GameWithoutAName/src/main/java/view/GridBox/pawns/Knight.java</url>
-          <line>38</line>
-          <option name="timeStamp" value="5" />
+          <line>134</line>
+          <option name="timeStamp" value="8" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

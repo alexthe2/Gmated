@@ -33,8 +33,11 @@ public class Knight extends Pawn {
 
     private void register() {
         addActionListener(e -> {
-            if(!canMove())
+            if(!canMove()) {
+                informClicked();
                 return;
+            }
+
 
             clicked = !clicked;
             if (!clicked) {

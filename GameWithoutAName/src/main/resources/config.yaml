@@ -12,3 +12,5 @@ orange:
   knight:
     - x: 7
       y: 3
+    - x: 1
+      y: 1

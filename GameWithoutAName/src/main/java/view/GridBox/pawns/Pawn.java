@@ -58,6 +58,12 @@ public abstract class Pawn extends GridButton implements IHotRescale {
         }
     }
 
+    protected void informClicked() {
+        if(!canMove()) {
+            support.firePropertyChange(Dictionary.FIELD_ATTACKED, null,  new ChessPoint(gridx, gridy));
+        }
+    }
+
     public void register(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
