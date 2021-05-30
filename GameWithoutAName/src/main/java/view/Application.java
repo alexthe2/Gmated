@@ -13,7 +13,7 @@ public class Application extends JFrame {
 
         setLayout(new GridLayout(1,1));
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setPreferredSize(new Dimension(WIDTH_CHUNK * SIZE_X, HEIGHT_CHUNK * SIZE_Y));
+        setPreferredSize(new Dimension(WIDTH_CHUNK * SIZE_X + WIDTH_CHUNK / 4, HEIGHT_CHUNK * SIZE_Y + HEIGHT_CHUNK / 2));
 
         add(new MainPanel());
 

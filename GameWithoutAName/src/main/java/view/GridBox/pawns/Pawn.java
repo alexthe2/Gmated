@@ -9,6 +9,7 @@ import lombok.Setter;
 import view.GridBox.GridButton;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -18,7 +19,7 @@ import java.beans.PropertyChangeSupport;
  */
 public abstract class Pawn extends GridButton implements IHotRescale {
     @Getter
-    protected final int player;
+    protected int player;
 
     protected BufferedImage image;
 
@@ -28,18 +29,45 @@ public abstract class Pawn extends GridButton implements IHotRescale {
     @Getter
     protected PropertyChangeSupport support;
 
-    protected Pawn(String text, int x, int y, int player) {
-        super(text, x, y);
-        this.player = player;
+    @Getter
+    protected int attack;
 
-        support = new PropertyChangeSupport(this);
+    @Getter
+    protected int health;
+
+    protected Pawn(String text, int x, int y, int player, int attack, int health) {
+        super(text, x, y);
+
+        construct(player, attack, health);
     }
 
-    protected Pawn(ImageIcon icon, int x, int y, int player) {
+    protected Pawn(ImageIcon icon, int x, int y, int player, int attack, int health) {
         super(icon, x, y);
+        construct(player, attack, health);
+    }
+
+    private void updateSubText() {
+        setText(String.format("%d|%d", attack, health));
+    }
+
+    protected void informFieldBoth(int x, int y) {
+        informFieldMovable(x, y);
+        informFieldAttack(x, y);
+    }
+
+    private void construct(int player, int attack, int health) {
         this.player = player;
+        this.attack = attack;
+        this.health = health;
+
+        setFont(new Font("Arial", Font.BOLD, 15));
+        setForeground(new Color(0, 0, 0));
+
 
         support = new PropertyChangeSupport(this);
+        setHorizontalTextPosition(JButton.CENTER);
+        setVerticalTextPosition(JButton.CENTER);
+        updateSubText();
     }
 
     protected boolean canMove() {
@@ -49,6 +77,12 @@ public abstract class Pawn extends GridButton implements IHotRescale {
     protected void informFieldMovable(int x, int y) {
         if(canMove()) {
             support.firePropertyChange(Dictionary.FIELD_MOVABLE, null, new ChessPoint(x, y));
+        }
+    }
+
+    protected void informFieldAttack(int x, int y) {
+        if(canMove()) {
+            support.firePropertyChange(Dictionary.FIELD_ATTACK, null, new ChessPoint(x, y));
         }
     }
 
@@ -66,5 +100,12 @@ public abstract class Pawn extends GridButton implements IHotRescale {
 
     public void register(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
+    }
+
+    public boolean reduceHealth(int amount) {
+        health  -= amount;
+        updateSubText();
+
+        return health <= 0;
     }
  }

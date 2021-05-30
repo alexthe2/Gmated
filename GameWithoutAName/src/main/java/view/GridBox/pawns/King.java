@@ -12,6 +12,10 @@ import java.util.Objects;
  * A King
  */
 public class King extends Pawn {
+    private static final int KING_ATTACK = 10;
+    private static final int KING_HEALTH = 80;
+
+
     /**
      * Create a King
      * @param color
@@ -20,8 +24,14 @@ public class King extends Pawn {
      */
     @SneakyThrows
     public King(int color, int x, int y) {
-        super("", x, y, color);
+        super("", x, y, color, KING_ATTACK, KING_HEALTH);
         image = ImageIO.read(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource(String.format("king%d.png", color))));
+
+        register();
+    }
+
+    private void register() {
+        addActionListener(e -> informClicked());
     }
 
     /**

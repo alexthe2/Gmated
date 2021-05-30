@@ -14,3 +14,7 @@ orange:
       y: 3
     - x: 1
       y: 1
+
+  archer:
+    - x: 10
+      y: 8

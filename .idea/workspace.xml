@@ -5,12 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="26f5d673-0b5e-4a66-9ea0-4178a2f475b5" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/GameWithoutAName/src/main/java/view/GridBox/pawns/Archer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameWithoutAName/src/main/java/Swings/AdvancedGridLayout.java" beforeDir="false" afterPath="$PROJECT_DIR$/GameWithoutAName/src/main/java/Swings/AdvancedButtonLayout.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameWithoutAName/src/main/java/config/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/GameWithoutAName/src/main/java/config/Config.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GameWithoutAName/src/main/java/config/Dictionary.java" beforeDir="false" afterPath="$PROJECT_DIR$/GameWithoutAName/src/main/java/config/Dictionary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameWithoutAName/src/main/java/view/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/GameWithoutAName/src/main/java/view/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameWithoutAName/src/main/java/view/GridBox/GridButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/GameWithoutAName/src/main/java/view/GridBox/GridButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameWithoutAName/src/main/java/view/GridBox/pawns/King.java" beforeDir="false" afterPath="$PROJECT_DIR$/GameWithoutAName/src/main/java/view/GridBox/pawns/King.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GameWithoutAName/src/main/java/view/GridBox/pawns/Knight.java" beforeDir="false" afterPath="$PROJECT_DIR$/GameWithoutAName/src/main/java/view/GridBox/pawns/Knight.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GameWithoutAName/src/main/java/view/GridBox/pawns/Pawn.java" beforeDir="false" afterPath="$PROJECT_DIR$/GameWithoutAName/src/main/java/view/GridBox/pawns/Pawn.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GameWithoutAName/src/main/java/view/MainPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/GameWithoutAName/src/main/java/view/MainPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GameWithoutAName/src/main/resources/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/GameWithoutAName/src/main/resources/config.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameWithoutAName/src/main/resources/king0.png" beforeDir="false" afterPath="$PROJECT_DIR$/GameWithoutAName/src/main/resources/king0.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameWithoutAName/src/main/resources/knight0.png" beforeDir="false" afterPath="$PROJECT_DIR$/GameWithoutAName/src/main/resources/knight0.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameWithoutAName/src/main/resources/knight1.png" beforeDir="false" afterPath="$PROJECT_DIR$/GameWithoutAName/src/main/resources/knight1.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +36,14 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="ProjectId" id="1tAirfc9H74hs0tDSn2vVroqc9S" />
   <component name="ProjectViewState">
@@ -66,15 +83,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -94,7 +109,8 @@
       <option name="presentableId" value="Default" />
       <updated>1622218495182</updated>
       <workItem from="1622218497046" duration="13799000" />
-      <workItem from="1622286170909" duration="9369000" />
+      <workItem from="1622286170909" duration="11027000" />
+      <workItem from="1622374062223" duration="5301000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1622220643253</created>
@@ -152,7 +168,21 @@
       <option name="project" value="LOCAL" />
       <updated>1622295901173</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Now hitting is possible">
+      <created>1622297300654</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1622297300654</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Bugs &amp; Bugs">
+      <created>1622297504396</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1622297504396</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -165,19 +195,29 @@
     <MESSAGE value="How  about pushing config file" />
     <MESSAGE value="How  about pushing movement" />
     <MESSAGE value="Added multiplayer movement" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added multiplayer movement" />
+    <MESSAGE value="Now hitting is possible" />
+    <MESSAGE value="Bugs &amp; Bugs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bugs &amp; Bugs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/GameWithoutAName/src/main/java/Swings/AdvancedGridLayout.java</url>
+          <url>file://$PROJECT_DIR$/GameWithoutAName/src/main/java/Swings/AdvancedButtonLayout.java</url>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/GameWithoutAName/src/main/java/view/MainPanel.java</url>
-          <line>134</line>
-          <option name="timeStamp" value="8" />
+          <line>155</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/GameWithoutAName/src/main/java/view/GridBox/pawns/King.java</url>
+          <line>33</line>
+          <properties>
+            <option name="lambda-ordinal" value="0" />
+          </properties>
+          <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -1,6 +1,6 @@
 package view;
 
-import Swings.AdvancedGridLayout;
+import Swings.AdvancedButtonLayout;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import config.ChessPoint;
@@ -8,6 +8,7 @@ import config.Dictionary;
 import controller.Controller;
 import lombok.SneakyThrows;
 import view.GridBox.GridButton;
+import view.GridBox.pawns.Archer;
 import view.GridBox.pawns.King;
 import view.GridBox.pawns.Knight;
 import view.GridBox.pawns.Pawn;
@@ -29,17 +30,22 @@ public class MainPanel extends JPanel {
 
     private ChessPoint oldPoint;
 
+    private ArrayList<ChessPoint> attackable;
+    private ArrayList<ChessPoint> movable;
+
     public MainPanel() {
         super();
 
         buttons = new HashMap<>(SIZE_X * SIZE_Y);
+        attackable = new ArrayList<>();
+        movable = new ArrayList<>();
         setBackground(Color.darkGray);
 
         construct();
     }
 
     private void construct() {
-        setLayout(new AdvancedGridLayout(SIZE_Y, SIZE_X));
+        setLayout(new AdvancedButtonLayout(SIZE_Y, SIZE_X, WIDTH_CHUNK, buttons));
 
         for(var y = 0; y < SIZE_Y; y++) {
             for(var x = 0; x < SIZE_X; x++) {
@@ -62,7 +68,7 @@ public class MainPanel extends JPanel {
         return button;
     }
     private void checkSwap(int x, int y) {
-        if (oldPoint != null) {
+        if (oldPoint != null && movable.contains(new ChessPoint(x, y))) {
             swapAndClear(new ChessPoint(x, y), oldPoint);
             Controller.move();
         }
@@ -85,6 +91,14 @@ public class MainPanel extends JPanel {
 
         add(button1, p2.getY() * SIZE_X + p2.getX());
         add(button2, p1.getY() * SIZE_X + p1.getX());
+
+        if(!(button1 instanceof Pawn)) {
+            button1.setText(String.format("x-%d : y-%d", p2.getX(), p2.getY()));
+        }
+
+        if(!(button2 instanceof Pawn)) {
+            button2.setText(String.format("x-%d : y-%d", p1.getX(), p1.getY()));
+        }
 
     }
 
@@ -110,15 +124,26 @@ public class MainPanel extends JPanel {
 
     }
 
-    public void makeClickable(ChessPoint point) {
+    public void makeMovable(ChessPoint point) {
+        movable.add(point);
         var but = buttons.get(point);
         if(but != null) {
             but.makeClickable();
         }
     }
 
+    public void makeAttackable(ChessPoint point) {
+        attackable.add(point);
+        var but = buttons.get(point);
+        if(but != null) {
+            but.makeAttackable();
+        }
+    }
+
     public void clearClickable() {
         oldPoint = null;
+        attackable.clear();
+        movable.clear();
         buttons.forEach((chessPoint, gridButton) -> {
             if(!(gridButton instanceof Pawn))
                 gridButton.makeUnClickable();
@@ -129,25 +154,34 @@ public class MainPanel extends JPanel {
 
     public void checkHit(ChessPoint toHit) {
         if(oldPoint != null) {
-            if(((Pawn) buttons.get(oldPoint)).getPlayer() != ((Pawn) buttons.get(toHit)).getPlayer()) {
-                 swap(oldPoint, toHit);
+            if(((Pawn) buttons.get(oldPoint)).getPlayer() != ((Pawn) buttons.get(toHit)).getPlayer() && attackable.contains(toHit)) {
+                var attacked = (Pawn) buttons.get(toHit);
+                var attacker = (Pawn) buttons.get(oldPoint);
 
-                 var toRemove = buttons.get(oldPoint);
-                 buttons.remove(oldPoint);
-                 remove(toRemove);
-                 createAtPos(oldPoint.getX(), oldPoint.getY());
+                if(!attacked.reduceHealth(attacker.getAttack())) {
+                    Controller.move();
+                    clearClickable();
+                    return;
+                }
 
-                 clear();
+
+                var toRemove = buttons.get(toHit);
+                buttons.remove(toHit);
+                remove(toRemove);
+                createAtPos(toHit.getX(), toHit.getY());
+
+                clear();
             }
         }
     }
 
-    private void registerKnight(Knight k, int x, int y) {
+    private void registerPawn(Pawn k, int x, int y) {
 
         k.register(e -> {
             switch (e.getPropertyName()) {
                 case Dictionary.FIELD_CLEAR -> clearClickable();
-                case Dictionary.FIELD_MOVABLE -> makeClickable((ChessPoint) e.getNewValue());
+                case Dictionary.FIELD_MOVABLE -> makeMovable((ChessPoint) e.getNewValue());
+                case Dictionary.FIELD_ATTACK ->  makeAttackable((ChessPoint) e.getNewValue());
                 case "CURRENT" -> oldPoint = new ChessPoint(((ChessPoint) e.getNewValue()).getX(), ((ChessPoint) e.getNewValue()).getY());
                 case Dictionary.FIELD_ATTACKED ->  checkHit((ChessPoint) e.getNewValue());
                 default -> throw new IllegalStateException();
@@ -168,21 +202,35 @@ public class MainPanel extends JPanel {
             final int x = (Integer) king.get("x");
             final int y = (Integer) king.get("y");
 
-            replace(new King(0, x, y), x, y);
+            registerPawn(new King(0, x, y), x, y);
         }
 
         for(var knight : (ArrayList<Map<String, Object>>) (purples).get("knight")) {
             final int x = (Integer) knight.get("x");
             final int y = (Integer) knight.get("y");
 
-            registerKnight(new Knight(0, x, y), x, y);
+            registerPawn(new Knight(0, x, y), x, y);
+        }
+
+        for(var king : (ArrayList<Map<String, Object>>) (oranges).get("king")) {
+            final int x = (Integer) king.get("x");
+            final int y = (Integer) king.get("y");
+
+            registerPawn(new King(1, x, y), x, y);
         }
 
         for(var knight : (ArrayList<Map<String, Object>>) (oranges).get("knight")) {
             final int x = (Integer) knight.get("x");
             final int y = (Integer) knight.get("y");
 
-            registerKnight(new Knight(1, x, y), x, y);
+            registerPawn(new Knight(1, x, y), x, y);
+        }
+
+        for(var archer : (ArrayList<Map<String, Object>>) (oranges).get("archer")) {
+            final int x = (Integer) archer.get("x");
+            final int y = (Integer) archer.get("y");
+
+            registerPawn(new Archer(1, x, y), x, y);
         }
     }
 }

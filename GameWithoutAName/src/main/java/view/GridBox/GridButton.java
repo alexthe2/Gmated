@@ -56,6 +56,12 @@ public class GridButton extends JButton {
      */
     public void makeClickable() {
         setEnabled(true);
+        setBackground(Color.LIGHT_GRAY);
+    }
+
+    public void makeAttackable() {
+        makeClickable();
+        setBackground(Color.RED);
     }
 
     /**
