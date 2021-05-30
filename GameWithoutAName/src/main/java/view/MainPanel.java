@@ -233,4 +233,8 @@ public class MainPanel extends JPanel {
             registerPawn(new Archer(1, x, y), x, y);
         }
     }
+
+    private void constructNoise() {
+
+    }
 }
