@@ -7,7 +7,7 @@ import config.ChessPoint;
 import config.Dictionary;
 import controller.Controller;
 import lombok.SneakyThrows;
-import riven.PerlinNoise;
+import view.GridBox.DeadButton;
 import view.GridBox.GridButton;
 import view.GridBox.pawns.Archer;
 import view.GridBox.pawns.King;
@@ -20,10 +20,13 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import static config.Config.*;
 
 public class MainPanel extends JPanel {
+
+
     private HashMap<ChessPoint, GridButton> buttons;
 
     private ObjectMapper mapper;
@@ -33,6 +36,9 @@ public class MainPanel extends JPanel {
 
     private ArrayList<ChessPoint> attackable;
     private ArrayList<ChessPoint> movable;
+
+    private King kingOrange;
+    private King kingPurple;
 
     public MainPanel() {
         super();
@@ -54,12 +60,14 @@ public class MainPanel extends JPanel {
             }
         }
 
-        updateFromYaml("C:\\Users\\blesi\\Documents\\school\\Gmated\\GameWithoutAName\\src\\main\\resources\\config.yaml");
+        updateFromYaml("E:\\Gmated\\GameWithoutAName\\src\\main\\resources\\config.yaml");
+        constructNoise();
     }
 
     private GridButton createAtPos(int x, int y) {
         var button = new GridButton(String.format("x-%d : y-%d", x, y), x, y);
-        add(button, y * SIZE_X + x);
+        button.loadAsStone();
+        add(button);
         buttons.put(new ChessPoint(x,y), button);
         button.addActionListener(e -> {
             checkSwap(button.getGridx(), button.getGridy());
@@ -71,7 +79,7 @@ public class MainPanel extends JPanel {
     private void checkSwap(int x, int y) {
         if (oldPoint != null && movable.contains(new ChessPoint(x, y))) {
             swapAndClear(new ChessPoint(x, y), oldPoint);
-            Controller.move();
+            makeMove();
         }
     }
 
@@ -87,20 +95,6 @@ public class MainPanel extends JPanel {
         buttons.replace(p1, button1, button2);
         buttons.replace(p2, button2, button1);
 
-        remove(button1);
-        remove(button2);
-
-        add(button1, p2.getY() * SIZE_X + p2.getX());
-        add(button2, p1.getY() * SIZE_X + p1.getX());
-
-        if(!(button1 instanceof Pawn)) {
-            button1.setText(String.format("x-%d : y-%d", p2.getX(), p2.getY()));
-        }
-
-        if(!(button2 instanceof Pawn)) {
-            button2.setText(String.format("x-%d : y-%d", p1.getX(), p1.getY()));
-        }
-
     }
 
     private void clear() {
@@ -115,13 +109,42 @@ public class MainPanel extends JPanel {
         clear();
     }
 
+    private void makeMove() {
+        final var x = new Random().nextInt() % 2;
+        final var y = new Random().nextInt() % 2;
+
+        ChessPoint point;
+        ChessPoint knightPoint;
+
+        if(Controller.getCurrentPlayer() == PURPLE) {
+            point = new ChessPoint(kingPurple.getGridx() + x, kingPurple.getGridy() + y);
+            knightPoint = new ChessPoint(kingPurple.getGridx(), kingPurple.getGridy());
+        } else {
+            point = new ChessPoint(kingOrange.getGridx() + x, kingOrange.getGridy() + y);
+            knightPoint = new ChessPoint(kingOrange.getGridx(), kingOrange.getGridy());
+        }
+
+        final var toMoveTo = buttons.get(point);
+        if(toMoveTo != null && !(toMoveTo instanceof DeadButton) && !point.equals(knightPoint)) {
+            if(toMoveTo instanceof Pawn) {
+                oldPoint = knightPoint;
+                attackable.add(point);
+                checkHit(point);
+            } else {
+                swap(point, knightPoint);
+            }
+        }
+
+        Controller.move();
+    }
+
     private void replace(GridButton newButton, int x, int y) {
         var button = buttons.get(new ChessPoint(x, y));
         remove((Component) button);
         buttons.remove(button);
 
         buttons.put(new ChessPoint(x, y), newButton);
-        add(newButton, y*SIZE_X + x);
+        add(newButton);
 
     }
 
@@ -129,7 +152,11 @@ public class MainPanel extends JPanel {
         movable.add(point);
         var but = buttons.get(point);
         if(but != null) {
-            but.makeClickable();
+            if(attackable.contains(point)) {
+                but.makeBoth();
+            } else {
+                but.makeClickable();
+            }
         }
     }
 
@@ -137,7 +164,11 @@ public class MainPanel extends JPanel {
         attackable.add(point);
         var but = buttons.get(point);
         if(but != null) {
-            but.makeAttackable();
+            if(movable.contains(point)) {
+                but.makeBoth();
+            } else {
+                but.makeAttackable();
+            }
         }
     }
 
@@ -151,6 +182,9 @@ public class MainPanel extends JPanel {
             else
                 ((Pawn)gridButton).setClicked(false);
         });
+
+        updateUI();
+        repaint();
     }
 
     public void checkHit(ChessPoint toHit) {
@@ -160,7 +194,7 @@ public class MainPanel extends JPanel {
                 var attacker = (Pawn) buttons.get(oldPoint);
 
                 if(!attacked.reduceHealth(attacker.getAttack())) {
-                    Controller.move();
+                    makeMove();
                     clearClickable();
                     return;
                 }
@@ -203,52 +237,58 @@ public class MainPanel extends JPanel {
             final int x = (Integer) king.get("x");
             final int y = (Integer) king.get("y");
 
-            registerPawn(new King(0, x, y), x, y);
+            King k = new King(PURPLE, x, y);
+            kingPurple = k;
+
+            registerPawn(k, x, y);
         }
 
         for(var knight : (ArrayList<Map<String, Object>>) (purples).get("knight")) {
             final int x = (Integer) knight.get("x");
             final int y = (Integer) knight.get("y");
 
-            registerPawn(new Knight(0, x, y), x, y);
+            registerPawn(new Knight(PURPLE, x, y), x, y);
         }
 
         for(var archer : (ArrayList<Map<String, Object>>) (purples).get("archer")) {
             final int x = (Integer) archer.get("x");
             final int y = (Integer) archer.get("y");
 
-            registerPawn(new Archer(0, x, y), x, y);
+            registerPawn(new Archer(PURPLE, x, y), x, y);
         }
 
         for(var king : (ArrayList<Map<String, Object>>) (oranges).get("king")) {
             final int x = (Integer) king.get("x");
             final int y = (Integer) king.get("y");
 
-            registerPawn(new King(1, x, y), x, y);
+            King k = new King(ORANGE, x, y);
+            kingOrange = k;
+
+            registerPawn(k, x, y);
         }
 
         for(var knight : (ArrayList<Map<String, Object>>) (oranges).get("knight")) {
             final int x = (Integer) knight.get("x");
             final int y = (Integer) knight.get("y");
 
-            registerPawn(new Knight(1, x, y), x, y);
+            registerPawn(new Knight(ORANGE, x, y), x, y);
         }
 
         for(var archer : (ArrayList<Map<String, Object>>) (oranges).get("archer")) {
             final int x = (Integer) archer.get("x");
             final int y = (Integer) archer.get("y");
 
-            registerPawn(new Archer(1, x, y), x, y);
+            registerPawn(new Archer(ORANGE, x, y), x, y);
         }
     }
 
     private void constructNoise() {
-        PerlinNoise noise =  new PerlinNoise((int) (System.currentTimeMillis() % Integer.MAX_VALUE));
-
         final var chunk = SIZE_Y / 3;
         for(int y = chunk; y < 2*chunk; y++) {
-            for(int x = 0; x < chunk; x++) {
-
+            for(int x = 0; x < SIZE_X; x++) {
+                if(Math.random() < .2) {
+                    replace(new DeadButton(x, y), x, y);
+                }
             }
         }
     }

@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="26f5d673-0b5e-4a66-9ea0-4178a2f475b5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/GameWithoutAName/src/main/java/riven/PerlinNoise.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GameWithoutAName/src/main/java/view/MainPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/GameWithoutAName/src/main/java/view/MainPanel.java" afterDir="false" />
     </list>
@@ -45,6 +44,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="extract.method.default.visibility" value="private" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/GameWithoutAName" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -98,7 +98,7 @@
       <updated>1622218495182</updated>
       <workItem from="1622218497046" duration="13799000" />
       <workItem from="1622286170909" duration="11027000" />
-      <workItem from="1622374062223" duration="6023000" />
+      <workItem from="1622374062223" duration="6306000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1622220643253</created>
@@ -191,7 +191,14 @@
       <option name="project" value="LOCAL" />
       <updated>1622379810013</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Bugs &amp; Bugs">
+      <created>1622380105660</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1622380105660</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -217,7 +224,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/GameWithoutAName/src/main/java/view/MainPanel.java</url>
-          <line>156</line>
+          <line>144</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">

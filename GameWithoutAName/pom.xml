@@ -34,6 +34,11 @@
             <artifactId>GameWithoutAName</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>org.diirt.javafx</groupId>
+            <artifactId>javafx-all</artifactId>
+            <version>3.1.7</version>
+        </dependency>
     </dependencies>
 
     <properties>

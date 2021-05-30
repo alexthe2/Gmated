@@ -2,9 +2,15 @@ package view.GridBox;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.SneakyThrows;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
+
+import static config.Config.HEIGHT_CHUNK;
+import static config.Config.WIDTH_CHUNK;
 
 /**
  * A Custom Button for GMated
@@ -14,6 +20,11 @@ import java.awt.*;
 public class GridButton extends JButton {
     protected int gridx;
     protected int gridy;
+
+    private ImageIcon disabledIcon;
+    private ImageIcon selectableIcon;
+    private ImageIcon attackableIcon;
+    private ImageIcon bothIcon;
 
     /**
      * Create a GridButton
@@ -43,6 +54,23 @@ public class GridButton extends JButton {
         init();
     }
 
+    @SneakyThrows
+    public void loadAsStone() {
+        setText("");
+
+        disabledIcon = new ImageIcon(ImageIO.read(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("stone.png")))
+                .getScaledInstance((int) (WIDTH_CHUNK * .95), (int)(HEIGHT_CHUNK * .95), Image.SCALE_SMOOTH));
+
+        selectableIcon = new ImageIcon(ImageIO.read(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("stoneHighLight.png")))
+                .getScaledInstance((int) (WIDTH_CHUNK * .95), (int)(HEIGHT_CHUNK * .95), Image.SCALE_SMOOTH));
+
+        attackableIcon = new ImageIcon(ImageIO.read(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("stoneHighRed.png")))
+                .getScaledInstance((int) (WIDTH_CHUNK * .95), (int)(HEIGHT_CHUNK * .95), Image.SCALE_SMOOTH));
+
+        bothIcon = new ImageIcon(ImageIO.read(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("stoneHighBoth.png")))
+                .getScaledInstance((int) (WIDTH_CHUNK * .95), (int)(HEIGHT_CHUNK * .95), Image.SCALE_SMOOTH));
+    }
+
     /**
      * Init the button
      */
@@ -55,18 +83,28 @@ public class GridButton extends JButton {
      */
     public void makeClickable() {
         setEnabled(true);
-        setBackground(Color.LIGHT_GRAY);
+
+        setIcon(selectableIcon);
     }
 
     public void makeAttackable() {
-        makeClickable();
-        setBackground(Color.RED);
+        setEnabled(true);
+
+        setIcon(attackableIcon);
     }
+
+    public void makeBoth() {
+        setEnabled(true);
+
+        setIcon(bothIcon);
+    }
+
 
     /**
      * Make it unclickable
      */
     public void makeUnClickable() {
+        setIcon(disabledIcon);
         setEnabled(false);
     }
 }
