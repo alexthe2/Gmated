@@ -54,7 +54,7 @@ public class MainPanel extends JPanel {
             }
         }
 
-        updateFromYaml("E:\\Gmated\\GameWithoutAName\\src\\main\\resources\\config.yaml");
+        updateFromYaml("C:\\Users\\blesi\\Documents\\school\\Gmated\\GameWithoutAName\\src\\main\\resources\\config.yaml");
     }
 
     private GridButton createAtPos(int x, int y) {

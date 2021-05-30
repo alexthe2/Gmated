@@ -1,20 +1,22 @@
 purple:
   king:
-    - x: 3
-      y: 3
+    - x: 0
+      y: 0
   knight:
-    - x: 5
+    - x: 0
+      y: 3
+  archer:
+    - x: 0
       y: 2
 
 orange:
-  king: []
-
+  king:
+    - x: 11
+      y: 11
   knight:
-    - x: 7
-      y: 3
-    - x: 1
-      y: 1
-
-  archer:
     - x: 10
-      y: 8
+      y: 11
+  archer:
+    - x: 9
+      y: 11
+
