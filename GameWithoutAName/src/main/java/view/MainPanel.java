@@ -15,12 +15,12 @@ import view.GridBox.pawns.Knight;
 import view.GridBox.pawns.Pawn;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 import static config.Config.*;
 
@@ -60,7 +60,7 @@ public class MainPanel extends JPanel {
             }
         }
 
-        updateFromYaml("E:\\Gmated\\GameWithoutAName\\src\\main\\resources\\config.yaml");
+        updateFromYaml();
         constructNoise();
     }
 
@@ -109,6 +109,7 @@ public class MainPanel extends JPanel {
         clear();
     }
 
+    @SneakyThrows
     private void makeMove() {
         final var x = new Random().nextInt() % 2;
         final var y = new Random().nextInt() % 2;
@@ -135,7 +136,30 @@ public class MainPanel extends JPanel {
             }
         }
 
+        updateUI();
+        repaint();
+
+        boolean playable = false;
         Controller.move();
+        for(var entry : buttons.entrySet()) {
+            if(entry.getValue() instanceof Pawn) {
+                var pawn = (Pawn) entry.getValue();
+                if(!(pawn instanceof King)) {
+                    playable = true;
+                    if(pawn.getPlayer() == Controller.getCurrentPlayer()) {
+                        return;
+                    }
+                }
+            }
+        }
+
+        if(!playable) {
+            JOptionPane.showMessageDialog(null, "Draw");
+            Thread.currentThread().interrupt();
+        }
+
+        TimeUnit.MILLISECONDS.sleep(100);
+        makeMove();
     }
 
     private void replace(GridButton newButton, int x, int y) {
@@ -217,7 +241,10 @@ public class MainPanel extends JPanel {
                 case Dictionary.FIELD_CLEAR -> clearClickable();
                 case Dictionary.FIELD_MOVABLE -> makeMovable((ChessPoint) e.getNewValue());
                 case Dictionary.FIELD_ATTACK ->  makeAttackable((ChessPoint) e.getNewValue());
-                case "CURRENT" -> oldPoint = new ChessPoint(((ChessPoint) e.getNewValue()).getX(), ((ChessPoint) e.getNewValue()).getY());
+                case "CURRENT" -> {
+                    clearClickable();
+                    oldPoint = new ChessPoint(((ChessPoint) e.getNewValue()).getX(), ((ChessPoint) e.getNewValue()).getY());
+                }
                 case Dictionary.FIELD_ATTACKED ->  checkHit((ChessPoint) e.getNewValue());
                 default -> throw new IllegalStateException();
             }
@@ -226,9 +253,23 @@ public class MainPanel extends JPanel {
     }
 
     @SneakyThrows
-    private void updateFromYaml(String yaml) {
+    private void updateFromYaml() {
         mapper = new ObjectMapper(new YAMLFactory());
-        config = mapper.readValue(new File(yaml), Map.class);
+        JFileChooser fileChooser = new JFileChooser("./");
+        fileChooser.setDialogTitle("Choose the config.yaml");
+        fileChooser.setFileFilter(new FileFilter() {
+            @Override
+            public boolean accept(File f) {
+                return f.getAbsolutePath().endsWith(".yaml") || f.isDirectory();
+            }
+
+            @Override
+            public String getDescription() {
+                return null;
+            }
+        });
+        fileChooser.showOpenDialog(null);
+        config = mapper.readValue(fileChooser.getSelectedFile(), Map.class);
 
         Map<String, Object> purples = (Map<String, Object>) config.get("purple");
         Map<String, Object> oranges = (Map<String, Object>) config.get("orange");

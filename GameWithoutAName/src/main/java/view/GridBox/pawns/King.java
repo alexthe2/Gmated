@@ -15,7 +15,7 @@ import static config.Config.PURPLE;
  * A King
  */
 public class King extends Pawn {
-    private static final int KING_ATTACK = 10;
+    private static final int KING_ATTACK = 80;
     private static final int KING_HEALTH = 80;
 
 

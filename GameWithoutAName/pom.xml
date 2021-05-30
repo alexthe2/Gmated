@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
-    <artifactId>GameWithoutAName</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>eu.onlyqualitygames</groupId>
+    <artifactId>STIK</artifactId>
+    <version>1.0</version>
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -29,16 +29,7 @@
             <artifactId>jackson-dataformat-yaml</artifactId>
             <version>RELEASE</version>
         </dependency>
-        <dependency>
-            <groupId>org.example</groupId>
-            <artifactId>GameWithoutAName</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.diirt.javafx</groupId>
-            <artifactId>javafx-all</artifactId>
-            <version>3.1.7</version>
-        </dependency>
+
     </dependencies>
 
     <properties>
