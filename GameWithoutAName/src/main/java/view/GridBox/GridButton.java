@@ -48,7 +48,6 @@ public class GridButton extends JButton {
      */
     private void init() {
         setBackground(Color.lightGray);
-
     }
 
     /**
