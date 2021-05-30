@@ -7,6 +7,7 @@ import config.ChessPoint;
 import config.Dictionary;
 import controller.Controller;
 import lombok.SneakyThrows;
+import riven.PerlinNoise;
 import view.GridBox.GridButton;
 import view.GridBox.pawns.Archer;
 import view.GridBox.pawns.King;
@@ -212,6 +213,13 @@ public class MainPanel extends JPanel {
             registerPawn(new Knight(0, x, y), x, y);
         }
 
+        for(var archer : (ArrayList<Map<String, Object>>) (purples).get("archer")) {
+            final int x = (Integer) archer.get("x");
+            final int y = (Integer) archer.get("y");
+
+            registerPawn(new Archer(0, x, y), x, y);
+        }
+
         for(var king : (ArrayList<Map<String, Object>>) (oranges).get("king")) {
             final int x = (Integer) king.get("x");
             final int y = (Integer) king.get("y");
@@ -235,6 +243,13 @@ public class MainPanel extends JPanel {
     }
 
     private void constructNoise() {
+        PerlinNoise noise =  new PerlinNoise((int) (System.currentTimeMillis() % Integer.MAX_VALUE));
 
+        final var chunk = SIZE_Y / 3;
+        for(int y = chunk; y < 2*chunk; y++) {
+            for(int x = 0; x < chunk; x++) {
+
+            }
+        }
     }
 }
